@@ -1,0 +1,11 @@
+---
+import Base from "./Base.astro";
+
+const { title = "content page" } = Astro.props;
+---
+
+<Base title={title}>
+  <div class="max-w-6xl mx-auto p-4 mt-0">
+    <slot />
+  </div>
+</Base>

@@ -1,0 +1,13 @@
+---
+const { notice_title = "Notice" } = Astro.props;
+---
+
+<div class="text-red-600 font-bold text-lg border-b border-gray-200">
+  <a href="/">
+    <marquee
+      onmouseover="this.stop();"
+      onmouseout="this.start();"
+      scrollamount="4">Last: {notice_title}</marquee
+    >
+  </a>
+</div>
