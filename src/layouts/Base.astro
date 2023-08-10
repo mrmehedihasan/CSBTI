@@ -2,6 +2,7 @@
 import Marquee from "../components/Marquee.astro";
 import Navbar from "./../components/Navbar.astro";
 import Slider from "./../components/Slider.astro";
+import Footer from "../components/Footer.astro";
 const { title = "Default Title" } = Astro.props;
 
 const currentPage = Astro.url.pathname;
@@ -35,11 +36,12 @@ const currentPage = Astro.url.pathname;
     </style>
     <title>{title}</title>
   </head>
-  <body class="">
+  <body>
     {currentPage === "/" && <Slider />}
     <Navbar />
     {currentPage === "/" && <Marquee />}
     <slot />
+    <Footer />
     <script src="./../../node_modules/preline/dist/preline.js"></script>
   </body>
 </html>
