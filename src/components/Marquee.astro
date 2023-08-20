@@ -1,5 +1,13 @@
 ---
-const { notice_title = "Notice" } = Astro.props;
+import { PB } from "../config/pb";
+
+const last_notice = await PB.collection("last_notice").getList(1, 1, {
+  sort: "-created",
+});
+
+const notice_title = last_notice.items[0].notice;
+
+console.log(notice_title);
 ---
 
 <div class="text-red-600 font-bold text-lg border-b border-gray-200">
@@ -7,7 +15,10 @@ const { notice_title = "Notice" } = Astro.props;
     <marquee
       onmouseover="this.stop();"
       onmouseout="this.start();"
-      scrollamount="4">Last: {notice_title}</marquee
+      scrollamount="4"
+      >সর্বশেষ: {notice_title} : {
+        new Date(last_notice.items[0].date).toLocaleDateString()
+      }</marquee
     >
   </a>
 </div>

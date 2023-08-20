@@ -1,29 +1,44 @@
+---
+import { PB } from "./../config/pb.js";
+
+const imagesResult = await PB.collection("slider_image").getList(1, 5, {
+  sort: "created",
+});
+
+if (!imagesResult.items) {
+  throw new Error("No images found");
+}
+const image_urls = [];
+
+imagesResult.items.forEach((record) => {
+  const url = PB.files.getUrl(record, record.photo, {});
+  image_urls.push(url);
+});
+---
+
 <div
   class="swiffy-slider slider-nav-nodelay slider-nav-autoplay slider-nav-animation slider-nav-animation-fadein"
 >
   <ul class="slider-container">
-    <li class="">
-      <div id="slide1">
-        <img
-          style="width: 100%; object-fit: cover; height: 400px"
-          src="https://pocketbase-school.fly.dev/api/files/sliders/a392jhx12kyphrw/3Wd94VogxKv_vxsW0cXMvM.jpg"
-        />
-      </div>
-    </li>
-    <li class="">
-      <div id="slide1">
-        <img
-          style="width: 100%; object-fit: cover; height: 400px"
-          src="https://pocketbase-school.fly.dev/api/files/sliders/s02ca6iud242lby/1eicrjc6Zsz_CxHd0IQoLl.jpg"
-        />
-      </div>
-    </li>
+    {
+      image_urls.map((url, idx) => (
+        <div id="slide{idx+1}">
+          <li class="">
+            <img
+              style="width: 100%; object-fit: cover; height: 400px"
+              src={url}
+            />
+          </li>
+        </div>
+      ))
+    }
   </ul>
 
   <button type="button" class="slider-nav"></button>
   <button type="button" class="slider-nav slider-nav-next"></button>
-
   <ul class="slider-indicators">
+    <li class=""></li>
+    <li class=""></li>
     <li class=""></li>
     <li class=""></li>
   </ul>

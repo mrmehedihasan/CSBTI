@@ -1,3 +1,31 @@
+---
+import { PB } from "./../config/pb.js";
+
+const principal = await PB.collection("principal").getList(1, 2, {
+  sort: "created",
+});
+
+const vice_principal = await PB.collection("vice_principal").getList(1, 2, {
+  sort: "created",
+});
+
+const vice_principal_image = PB.files.getUrl(
+  vice_principal.items[0],
+  vice_principal.items[0].photo,
+  {
+    thumb: "150x150",
+  }
+);
+
+const principal_image = PB.files.getUrl(
+  principal.items[0],
+  principal.items[0].photo,
+  {
+    thumb: "150x150",
+  }
+);
+---
+
 <div class="grid grid-cols-12 gap-4 font-light text-lg">
   <div class="p-4 rounded-md col-span-12 sm:col-span-6">
     <span class="text-2xl font-bold">About <br /></span>
@@ -27,18 +55,18 @@
         class="flex flex-col border-blue-300 border-2 bg-white shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]"
       >
         <img
-          class="w-full h-auto rounded-t-xl"
-          src="https://placehold.co/150x150"
+          class="w-[300px] rounded-t-xl"
+          src={principal_image}
           alt="Image Description"
         />
         <div class="p-4 md:p-5">
           <h3
             class="text-lg font-bold text-gray-800 text-center dark:text-white"
           >
-            Mehedi Hasan Howlader
+            {principal.items[0].name}
           </h3>
-          <p class="mt-1 text-gray-800 dark:text-gray-400 text-center">
-            Chariman
+          <p class="mt-1 p-2 text-gray-800 dark:text-gray-400 text-center">
+            {principal.items[0].bio}
           </p>
           <div class="w-full flex justify-center">
             <button
@@ -54,18 +82,18 @@
         class="flex flex-col border-blue-300 border-2 bg-white shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]"
       >
         <img
-          class="w-full h-auto rounded-t-xl"
-          src="https://placehold.co/200x200"
+          class="w-[300px] rounded-t-xl"
+          src={vice_principal_image}
           alt="Image Description"
         />
         <div class="p-4 md:p-5">
           <h3
             class="text-lg font-bold text-gray-800 text-center dark:text-white"
           >
-            Mehedi Hasan Howlader
+            {vice_principal.items[0].name}
           </h3>
-          <p class="mt-1 text-gray-800 dark:text-gray-400 text-center">
-            Chariman
+          <p class="mt-1 text-gray-800 dark:text-gray-400 text-center p-2">
+            {vice_principal.items[0].bio}
           </p>
           <div class="w-full flex justify-center">
             <button
