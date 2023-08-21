@@ -1,6 +1,7 @@
 ---
 import Contents from "../../layouts/Contents.astro";
 import { PB } from "../../config/pb";
+import CapBreak from "../../components/Cap_Break.astro";
 
 const principal = await PB.collection("principal").getList(1, 2, {
   sort: "created",
@@ -27,12 +28,40 @@ const principal_image = PB.files.getUrl(
 );
 ---
 
-<Contents>
-  <div class="bg-slate-100 border-2 border-blue-900">
+<Contents title="Key People">
+  <div class="bg-white border-2 p-4 border-blue-900">
     <h1 class="text-3xl text-center font-bold p-4">Our Founding Principal</h1>
     <div class="flex flex-col items-center">
       <img class="h-56" src={principal_image} alt="" />
-      <h1 class="p-4 text-2xl">{principal.items[0].name}</h1>
+      <h1 class="p-2 text-2xl font-bold">{principal.items[0].name}</h1>
+      <p class="p-4">{principal.items[0].bio}</p>
+      <div>
+        <h1 class="p-4 text-2xl font-bold text-center">বাণী</h1>
+        <CapBreak />
+        <div class="p-4">
+          <p class="p-4 m-2 text-justify">
+            <Fragment set:html={principal.items[0].message} />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-2"></div>
+  <div class="bg-white border-2 p-4 border-blue-900">
+    <h1 class="text-3xl text-center font-bold p-4">Our Vice Principal</h1>
+    <div class="flex flex-col items-center">
+      <img class="h-56" src={vice_principal_image} alt="" />
+      <h1 class="p-2 text-2xl font-bold">{vice_principal.items[0].name}</h1>
+      <p class="p-4">{vice_principal.items[0].bio}</p>
+      <div>
+        <h1 class="p-4 text-2xl font-bold text-center">বাণী</h1>
+        <CapBreak />
+        <div class="p-4">
+          <p class="p-4 m-2 text-justify">
+            <Fragment set:html={vice_principal.items[0].message} />
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </Contents>
