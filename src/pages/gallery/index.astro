@@ -1,27 +1,32 @@
 ---
 import Contents from "../../layouts/Contents.astro";
+import { PB } from "../../config/pb";
+
+const imagesResult = await PB.collection("gallery").getFullList({
+  sort: "-created",
+});
+if (!imagesResult) {
+  throw new Error("No images found");
+}
+
+const images = [];
+
+imagesResult.forEach((record) => {
+  const url = PB.files.getUrl(record, record.photo, { thumb: "200x200" });
+  const image = {
+    url: url,
+    name: record.name,
+  };
+
+  images.push(image);
+});
 ---
 
 <Contents title="Gallery">
   <div style="min-height: 80vh;">
     <h1 class="text-center text-3xl font-bold p-4">Our Photos</h1>
     <div class="container">
-      <img
-        loading="lazy"
-        src="https://source.unsplash.com/1300x1200/?algeria"
-      />
-      <img
-        loading="lazy"
-        src="https://source.unsplash.com/1300x1200/?lebanon"
-      />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?qatar" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?uae" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?kuwait" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?oman" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?turkey" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?iran" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?jordan" />
-      <img loading="lazy" src="https://source.unsplash.com/1300x1200/?Kuwait" />
+      {images.map((image) => <img src={image.url} alt={image.name} />)}
     </div>
   </div>
 

@@ -1,11 +1,38 @@
 ---
 import Contents from "../../layouts/Contents.astro";
+import { PB } from "../../config/pb";
+
+const principal = await PB.collection("principal").getList(1, 2, {
+  sort: "created",
+});
+
+const vice_principal = await PB.collection("vice_principal").getList(1, 2, {
+  sort: "created",
+});
+
+const vice_principal_image = PB.files.getUrl(
+  vice_principal.items[0],
+  vice_principal.items[0].photo,
+  {
+    thumb: "150x150",
+  }
+);
+
+const principal_image = PB.files.getUrl(
+  principal.items[0],
+  principal.items[0].photo,
+  {
+    thumb: "150x150",
+  }
+);
 ---
 
 <Contents>
-  <h1 class="text-3xl text-center font-bold">Our Chairman</h1>
-
-  <div class="flex flex-col items-center">
-    <img class="h-56" src="https://placehold.co/200x200" />
+  <div class="bg-slate-100 border-2 border-blue-900">
+    <h1 class="text-3xl text-center font-bold p-4">Our Founding Principal</h1>
+    <div class="flex flex-col items-center">
+      <img class="h-56" src={principal_image} alt="" />
+      <h1 class="p-4 text-2xl">{principal.items[0].name}</h1>
+    </div>
   </div>
 </Contents>
